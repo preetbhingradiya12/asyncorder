@@ -42,6 +42,13 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping("/update/detail")
+    public ResponseEntity<getUserResponse> updateUserDetail(Authentication authentication, @RequestBody UserDTO.UpdateDTO userDto){
+        CustomPrincipal object = (CustomPrincipal) authentication.getPrincipal();
+        getUserResponse response = userService.updateUserDetail(object, userDto);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/logout")
     public ResponseEntity<Response> userLogout(Authentication authentication){
         CustomPrincipal object = (CustomPrincipal) authentication.getPrincipal();

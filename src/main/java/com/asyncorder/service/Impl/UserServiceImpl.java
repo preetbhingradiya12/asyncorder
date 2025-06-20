@@ -61,6 +61,21 @@ public class UserServiceImpl extends AbstractUserService implements UserService 
     }
 
     @Override
+    public getUserResponse updateUserDetail(CustomPrincipal token, UserDTO.UpdateDTO dto) {
+        CustomPrincipal user = token;
+        UUID userId = (UUID) user.getUserId();
+        User userData = getUserByIdOrThrow(userId);
+
+        userData.setEmail(dto.getEmail());
+        userData.setName(dto.getName());
+        userData.setRole(dto.getRole());
+
+        userRepository.save(userData);
+
+        return new getUserResponse(200, "User data fetch sucessfully", userData);
+    }
+
+    @Override
     public Response logoutUser(CustomPrincipal token) {
         CustomPrincipal user = token;
         UUID userId = (UUID) user.getUserId();
